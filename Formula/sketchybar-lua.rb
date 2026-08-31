@@ -7,7 +7,7 @@ class SketchybarLua < Formula
   desc "Lua API wrapper for SketchyBar"
   homepage "https://github.com/maxmeis/SbarLua"
   url "https://github.com/maxmeis/SbarLua/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "REPLACE_WITH_SHA256"
+  sha256 "09f878874d13c875581415c66878dc7356d6b9f74e87f46b0cae792baf95f31a"
   license "GPL-3.0-only"
   head "https://github.com/maxmeis/SbarLua.git"
 
