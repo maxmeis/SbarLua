@@ -1,9 +1,11 @@
 NAME=sketchybar
-CFLAGS=-std=c99 -O3 -g -shared -fPIC
-INSTALL_DIR=$(HOME)/.local/share/sketchybar_lua
+CFLAGS=-std=c99 -O3 -g -shared -fPIC -headerpad_max_install_names
+PREFIX ?= $(HOME)/.local/share/sketchybar_lua
 
-LUA_DIR=lua-5.5.0
-LIBS=-I$(LUA_DIR)/src -Lbin -llua -framework CoreFoundation
+LUA_DIR ?= lua-5.5.0
+LUA_CFLAGS ?= -I$(LUA_DIR)/src
+LUA_LIBS ?= -Lbin -llua
+LUA_DEPS ?= bin/liblua.a
 
 ifeq ($(shell uname -sm),Darwin arm64)
  ARCH= -arch arm64
@@ -11,15 +13,15 @@ else
  ARCH= -arch x86_64
 endif
 
-bin/$(NAME).so: src/$(NAME).c src/*.c bin/liblua.a
-	clang $(CFLAGS) $(ARCH) $^ $(LIBS) -o bin/$(NAME).so
+bin/$(NAME).so: src/$(NAME).c src/*.c $(LUA_DEPS) | bin
+	clang $(CFLAGS) $(LUA_CFLAGS) $(ARCH) $^ $(LUA_LIBS) -framework CoreFoundation -o bin/$(NAME).so
 
-install: bin/$(NAME).so | $(INSTALL_DIR)
-	mkdir -p $(INSTALL_DIR)
-	mv bin/$(NAME).so $(INSTALL_DIR)
+install: bin/$(NAME).so | $(PREFIX)
+	mkdir -p $(PREFIX)
+	mv bin/$(NAME).so $(PREFIX)
 
 uninstall:
-	rm -rf $(INSTALL_DIR)/$(NAME).so
+	rm -rf $(PREFIX)/$(NAME).so
 
 clean:
 	rm -rf bin
@@ -32,5 +34,5 @@ bin/liblua.a: | bin
 bin:
 	mkdir bin
 
-$(INSTALL_DIR):
-	mkdir -p $(INSTALL_DIR)
+$(PREFIX):
+	mkdir -p $(PREFIX)
