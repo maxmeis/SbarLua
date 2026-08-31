@@ -1,5 +1,5 @@
 NAME=sketchybar
-CFLAGS=-std=c99 -O3 -g -shared -fPIC
+CFLAGS=-std=c99 -O3 -g -shared -fPIC -headerpad_max_install_names
 PREFIX ?= $(HOME)/.local/share/sketchybar_lua
 
 LUA_DIR ?= lua-5.5.0
