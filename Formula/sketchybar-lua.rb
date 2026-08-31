@@ -12,6 +12,7 @@ class SketchybarLua < Formula
   head "https://github.com/maxmeis/SbarLua.git"
 
   depends_on :macos
+  depends_on "lua"
 
   def clear_env
     ENV.delete("CFLAGS")
@@ -21,7 +22,12 @@ class SketchybarLua < Formula
 
   def install
     clear_env
-    system "make", "install", "PREFIX=#{share}/sketchybar_lua"
+    lua = Formula["lua"]
+    system "make", "install",
+           "PREFIX=#{share}/sketchybar_lua",
+           "LUA_CFLAGS=-I#{lua.opt_include}/lua5.5",
+           "LUA_LIBS=-L#{lua.opt_lib} -llua",
+           "LUA_DEPS="
   end
 
   def caveats
@@ -33,6 +39,7 @@ class SketchybarLua < Formula
   end
 
   test do
-    assert_predicate share/"sketchybar_lua/sketchybar.so", :exist?
+    lua = Formula["lua"].opt_bin/"lua"
+    system lua, "-e", "package.cpath = '#{opt_share}/sketchybar_lua/?.so;' .. package.cpath; require('sketchybar')"
   end
 end
