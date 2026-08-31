@@ -6,8 +6,8 @@ class SketchybarLua < Formula
   env :std
   desc "Lua API wrapper for SketchyBar"
   homepage "https://github.com/maxmeis/SbarLua"
-  url "https://github.com/maxmeis/SbarLua/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "09f878874d13c875581415c66878dc7356d6b9f74e87f46b0cae792baf95f31a"
+  url "https://github.com/maxmeis/SbarLua/archive/refs/tags/v0.1.1.tar.gz"
+  sha256 "d7e0fd735bf129f55fa49d0a56b4b56d73094bc76a9f8c52df25ca3b04ca8b4b"
   license "GPL-3.0-only"
   head "https://github.com/maxmeis/SbarLua.git"
 
